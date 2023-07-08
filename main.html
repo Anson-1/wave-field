@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+ @license
+ Copyright 2019 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+  <head>
+    <title>Add Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <link rel="stylesheet" type="text/css" href="./style.css" />  
+    <script type="module" src="./overlay.js"></script> 
+  </head>
+
+  <!--- cut -->
+  <body>
+
+    <h1> Wave Field Demo </h1>
+    <select name="filter" id="filter" onchange="select_place(this)">
+      <option value=0 selected>Site</option>
+      <option value=0>Tai Tam Bay</option>
+      <option value=1>Clear Water Bay</option>
+      <option value=2>Hang Zhou</option>
+    </select>
+    <script type="text/javascript">
+      function select_place(el) {
+          view_place = el.value
+          //alert(el.value);
+      }
+    </script>
+
+    <select name="filter" id="filter" onchange="select_direction(this)">
+      <option value=0 selected>Wind Direction</option>
+      <option value=0>Northerly</option>
+      <option value=1>Northeasterly</option>
+      <option value=2>Easterly</option>
+      <option value=3>Southeasterly</option>
+      <option value=4>Southerly</option>
+      <option value=5>Southwesterly</option>
+      <option value=6>Westerly</option>
+      <option value=7>Northwestly</option>
+    </select>
+    <script type="text/javascript">
+      function select_direction(el) {
+          view_direction = el.value
+          //alert(el.value);
+      }
+    </script>
+
+    <!--- change wave field  -->
+    <script type="text/javascript" src="./overlay.js"></script>
+    <button id="clickme" onclick="initMap(view_place);">Locate</button> 
+    
+    <br>
+    <h2>Change the wave field.</h2>
+    <script type="text/javascript" src="./overlay.js"></script>
+    <button id="clickme" onclick="changeIMG(view_place, view_direction, 0);">4.44m/s</button>  
+    <button id="clickme" onclick="changeIMG(view_place, view_direction, 0);">6.67m/s</button>  
+    <button id="clickme" onclick="initMap(view_place);">Clear All</button> 
+    <br>
+
+
+    <!--The div element for the map -->
+    <div id="map"></div>
+
+    <!--- legend # not yet done -->
+      <div id="legend">
+        <div id="census-min">min</div>
+        <div class="color-key"><span id="data-caret">&#x25c6;</span></div>
+        <div id="census-max">max</div>
+      </div>
+    </div>
+
+    
+    <!-- prettier-ignore -->
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR0Yi4NwzBQ5ubvky9jYlsO2oBVLLuprM&callback=initMap&libraries=visualization"></script>
+    <script src="./overlay.js"></script>
+  </body>
+</html>
