@@ -1,18 +1,26 @@
 import matlab.engine
 import numpy as np
 import netCDF4 as nc
+# from json import JSONEncoder
+# import json
 import math
 import time
 
+# class NumpyArrayEncoder(JSONEncoder):
+#     def default(self, obj):
+#         if isinstance(obj, np.ndarray):
+#             return obj.tolist()
+#         return JSONEncoder.default(self, obj)
+
 path = "D:\Wave team research\wavm-inner_wave.nc"
 data = nc.Dataset(path)
-param_type = 'dir'
+param_type = 'hsign'
 
 x = np.array(data['x'])
 y = np.array(data['y'])
 depth = np.array(data['depth'][0, :, :])
 param = np.array(data[param_type][0, :, :])
-fac = 4
+fac = 8
 
 def avg(val, data_type):  
     if (data_type == 1):
@@ -40,12 +48,14 @@ def avg(val, data_type):
             # if v != -1.:
             sum += v
             len += 1
-        sum /= len
+        if (len > 0):
+            sum /= len
         return sum
 
 def zoom(arr, mult, data_type):
     # data_type - 0: x,y; 1: direction, 2: others
     arr_shape = np.shape(arr)
+    # print(arr_shape)
     arr_mod_shape = [math.ceil(s/mult) for s in arr_shape]
 
     arr_mod1 = []
@@ -95,7 +105,7 @@ eng = matlab.engine.start_matlab()
 if (param_type == "dir"):
     p_type = 1
 else:
-    p_type = 0
+    p_type = 2
     
 x_mod = zoom(x, fac, 0)
 y_mod = zoom(y, fac, 0)
@@ -104,14 +114,11 @@ param_mod = zoom(param, fac, p_type)
 disp = 0
 if (p_type == 1):
     disp = eng.quiver(x_mod, y_mod, param_mod[0], param_mod[1])
-elif (p_type == 0):
+elif (p_type == 2):
     disp = eng.pcolor(x_mod, y_mod, param_mod)
 
 t = time.time()
 while (time.time()-t) < 20:
     a = 1
-
-# while ():
-#     a = 1
 
 eng.quit()
