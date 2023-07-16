@@ -31,7 +31,7 @@
 <script src="leaflet-heat.js"></script>
 
 <script>
-    var map = L.map('map').setView([51.505, -0.09], 13);
+    var map = L.map('map').setView([22.237667, 114.269644], 13);
 
     var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -77,16 +77,18 @@
         .then(data => {
             x = data.X
             y = data.Y
-            console.log(data.Y)
+            intensity = data.waveHeight
+            console.log(intensity)
             const coor = []
             for(let i=0; i<210; i++){
                 for(let j=0; j<287; j++){
-                    arr = [y[i][j], x[i][j]];
+                    arr = [y[i][j], x[i][j], intensity[i][j]];
                     coor.push(arr)
                 }
             }
             console.log(coor)
-            var heat = L.heatLayer(coor).addTo(map)
+            var heat = L.heatLayer(coor)
+            .addTo(map)
 
            
         })
