@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Tutorial</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        #map{
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <h1>This is the Web Page</h1>
+    <div id="map">
+
+    </div>
+</body>
+</html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
+<script src="leaflet-heat.js"></script>
+
+<script>
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    })
+    osm.addTo(map);
+
+    console.log(addressPoints);
+    addressPoints = addressPoints.map(function(p) {
+        return [p[0], p[1]];
+    });
+    console.log(addressPoints)
+    var heat = L.heatLayer(addressPoints).addTo(map)
+    // let url = "Data.json"
+    // let jsondata;
+    // fetch(url).then(
+    //     function(u){ return u.json();}
+    //   ).then(
+    //     function(json){
+    //       jsondata = json;
+    //     }
+    //   )
+    // console.log(jsondata)
+    //   .then(response => response.json())
+    //   .then(data => {
+        
+    //     let x_coor = data.X[0][0];
+    //     console.log(x_coor)
+    //     console.log(data)
+    //     .then(jsondata = data)
+    
+    // var reader = new FileReader();
+    // reader.readAsText("Data.json");
+    // reader.onload = function(){
+    //     var x = reader.result;
+    //     console.log(x);
+    // }
+
+    // import users from 'Data.json' assert {'type': 'json'};
+    // console.log(users)
+     
+    fetch('Data.json')
+        .then(res => res.json())
+        .then(data => {
+            x = data.X
+            y = data.Y
+            console.log(data.Y)
+            const coor = []
+            for(let i=0; i<210; i++){
+                for(let j=0; j<287; j++){
+                    arr = [y[i][j], x[i][j]];
+                    coor.push(arr)
+                }
+            }
+            console.log(coor)
+            var heat = L.heatLayer(coor).addTo(map)
+
+           
+        })
+
+</script>

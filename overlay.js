@@ -87,6 +87,7 @@
 // This example requires the Visualization library. Include the libraries=visualization
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
+
 let map, heatmap;
 
 function initMap() {
@@ -167,11 +168,11 @@ function changeOpacity() {
 function getPoints() {
   return [
     new google.maps.LatLng(22.1778, 114.19),
-    new google.maps.LatLng(22.283433, 114.302620),
-    new google.maps.LatLng(22.283343, 114.302521),
-    new google.maps.LatLng(22.283234, 114.302412),
-    new google.maps.LatLng(22.283134, 114.302341),
-    new google.maps.LatLng(22.283012, 114.302214),
+    // new google.maps.LatLng(22.283433, 114.302620),
+    // new google.maps.LatLng(22.283343, 114.302521),
+    // new google.maps.LatLng(22.283234, 114.302412),
+    // new google.maps.LatLng(22.283134, 114.302341),
+    // new google.maps.LatLng(22.283012, 114.302214),
   ];
 }
 
